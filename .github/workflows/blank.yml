@@ -1,0 +1,35 @@
+name: Daily Sync
+
+on:
+  schedule:
+    # Run daily at midnight UTC
+    - cron: "0 0 * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout This Repository
+      uses: actions/checkout@v2
+      with:
+        path: mirror
+
+    - name: Checkout Target Repository
+      uses: actions/checkout@v2
+      with:
+        repository: user/target-repo
+        path: target-repo
+
+    - name: Sync Specific Folders
+      run: |
+        # Sync only specific folders from target repo to a specific location in your repo
+        rsync -av --delete lord-alfred/ipranges/tree/main/amazon/ mirror/
+        rsync -av --delete target-repo/folder2/ mirror/
+        
+        cd mirror
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Daily sync of specific folders from target repository"
+        git push origin main
