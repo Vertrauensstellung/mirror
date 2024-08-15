@@ -20,7 +20,7 @@ jobs:
         git clone --depth 1 --filter=blob:none --sparse https://github.com/lord-alfred/ipranges.git temp-ipranges
         cd temp-ipranges
         git sparse-checkout set microsoft
-        cp -r microsoft/* ../
+        cp -r microsoft ../microsoft
         cd ..
         rm -rf temp-ipranges
 
@@ -28,7 +28,7 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add .
+        git add microsoft
         git commit -m "Daily update of Microsoft IP Ranges"
         git push origin HEAD:main
       env:
