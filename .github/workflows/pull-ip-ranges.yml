@@ -18,12 +18,36 @@ jobs:
     - name: Ensure microsoft folder exists
       run: mkdir -p microsoft
 
+    - name: Ensure amazon folder exists
+      run: mkdir -p amazon
+
+    - name: Ensure google folder exists
+      run: mkdir -p google
+
     - name: Pull Microsoft IP Ranges
       run: |
         git clone --depth 1 --filter=blob:none --sparse https://github.com/lord-alfred/ipranges.git temp-ipranges
         cd temp-ipranges
         git sparse-checkout set microsoft
         cp -r microsoft/* ../microsoft/
+        cd ..
+        rm -rf temp-ipranges
+
+    - name: Pull Amazon IP Ranges
+      run: |
+        git clone --depth 1 --filter=blob:none --sparse https://github.com/lord-alfred/ipranges.git temp-ipranges
+        cd temp-ipranges
+        git sparse-checkout set amazon
+        cp -r amazon/* ../amazon/
+        cd ..
+        rm -rf temp-ipranges
+
+    - name: Pull Google IP Ranges
+      run: |
+        git clone --depth 1 --filter=blob:none --sparse https://github.com/lord-alfred/ipranges.git temp-ipranges
+        cd temp-ipranges
+        git sparse-checkout set google
+        cp -r google/* ../google/
         cd ..
         rm -rf temp-ipranges
 
