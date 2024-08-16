@@ -20,7 +20,7 @@ jobs:
         git clone --depth 1 --filter=blob:none --sparse https://github.com/lord-alfred/ipranges.git temp-ipranges
         cd temp-ipranges
         git sparse-checkout set microsoft
-        cp -r microsoft ../microsoft
+        cp -r microsoft/* ../microsoft/
         cd ..
         rm -rf temp-ipranges
 
